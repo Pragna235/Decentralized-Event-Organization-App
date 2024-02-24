@@ -1,3 +1,3 @@
 # Decentralized-Ticket-Booking-App
 
-* First Deployment - 
+* First Deployment - https://funny-zabaione-1ba7be.netlify.app/
