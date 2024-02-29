@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import {ethers} from "ethers";
-//import { contractAbi, contractAddress } from '../Constant/constants.js';
 
 const Connected = (props) => {
   const [eventName, setEventName] = useState("");
@@ -13,9 +11,6 @@ const Connected = (props) => {
   const [error, setError] = useState("");
   const [showCreateEvent, setShowCreateEvent] = useState(false);
   const [showBuyTicket, setShowBuyTicket] = useState(false);
-
-  
-  
 
   const handleCreateEvent = async () => {
     if (parseInt(ticketCount) < 10) {
@@ -40,36 +35,14 @@ const Connected = (props) => {
       setError("Invalid input for buying tickets");
       return;
     }
-  
+
     setError("");
-  
-    // Ensure that the buyTicketFunction is provided via props
-    if (!props.buyTicketFunction) {
-      setError("buyTicketFunction is not provided");
-      return;
-    }
-  
-    try {
-      // Connect to Metamask
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const accounts = await provider.send("eth_requestAccounts",[]);
-      const signer = provider.getSigner();
-  
-      // Call the buyTicketFunction with the connected signer
-      await props.buyTicketFunction(buyTicketEventId, parseInt(buyTicketQuantity), signer);
-  
-      // After successful purchase, fetch the updated events
-      //const updatedEvents = await fetchUpdatedEvents(); // You need to implement this function
-  
-      //setCreatedEvents(updatedEvents);
-      setBuyTicketEventId("");
-      setBuyTicketQuantity("");
-    } catch (error) {
-      console.error("Error buying tickets:", error);
-      setError("Error buying tickets. Please check your Metamask connection and try again.");
-    }
+
+    await props.buyTicketFunction(buyTicketEventId, parseInt(buyTicketQuantity));
+
+    setBuyTicketEventId("");
+    setBuyTicketQuantity("");
   };
-  
 
   return (
     <div className="connected-container">
